@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compra confirmada · Mi Mundo de Juguetes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Fredoka', 'system-ui', 'sans-serif'] },
+          colors: {
+            fucsia: { 50:'#fdf2f8',100:'#fce7f3',200:'#fbcfe8',300:'#f9a8d4',400:'#f472b6',500:'#ec4899',600:'#db2777',700:'#be185d',800:'#9d174d',900:'#831843' },
+            sol: { 50:'#fffbeb',100:'#fef3c7',200:'#fde68a',300:'#fcd34d',400:'#fbbf24',500:'#f59e0b',600:'#d97706',700:'#b45309',800:'#92400e',900:'#78350f' },
+            turquesa: { 50:'#ecfeff',100:'#cffafe',200:'#a5f3fc',300:'#67e8f9',400:'#22d3ee',500:'#06b6d4',600:'#0891b2',700:'#0e7490',800:'#155e75',900:'#164e63' },
+            lima: { 50:'#f7fee7',100:'#ecfccb',200:'#d9f99d',300:'#bef264',400:'#a3e635',500:'#84cc16',600:'#65a30d',700:'#4d7c0f',800:'#3f6212',900:'#365314' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen flex flex-col bg-gradient-to-b from-lima-50 to-white">
+  <div data-header></div>
+
+  <main class="flex-1 container-page py-8 md:py-12">
+    <div id="confirmacionContainer"></div>
+  </main>
+
+  <div data-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    const ordenId = UI.getQuery('orden');
+    const pedidos = Storage.get(KEYS.PEDIDOS, []);
+    const pedido = pedidos.find(p => p.id === ordenId);
+
+    if (!pedido) {
+      document.getElementById('confirmacionContainer').innerHTML = `
+        <div class="card p-12 text-center max-w-xl mx-auto">
+          <div class="text-7xl mb-4">🤔</div>
+          <h2 class="font-display text-2xl font-bold text-fucsia-900 mb-3">No encontramos esa orden</h2>
+          <p class="text-gray-600 mb-6">Verifica el enlace o revisa tu historial de pedidos.</p>
+          <a href="perfil.html" class="btn-primary">Ir a mi perfil</a>
+        </div>
+      `;
+    } else {
+      document.title = `Orden ${pedido.id} · Mi Mundo de Juguetes`;
+
+      document.getElementById('confirmacionContainer').innerHTML = `
+        <!-- Mensaje éxito -->
+        <section class="text-center max-w-2xl mx-auto mb-10 no-print">
+          <div class="inline-block bg-lima-100 rounded-full p-5 mb-5 animate-bounce-subtle">
+            <svg class="w-16 h-16 text-lima-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h1 class="font-display text-4xl md:text-5xl font-bold text-fucsia-900 mb-3">¡Compra confirmada!</h1>
+          <p class="text-lg text-gray-700 mb-2">Tu pedido ha sido recibido exitosamente.</p>
+          <p class="text-gray-600">Número de orden: <span class="font-bold text-fucsia-700">${pedido.id}</span></p>
+        </section>
+
+        <!-- Comprobante -->
+        <section class="card printable p-6 md:p-10 max-w-3xl mx-auto">
+          <div class="flex items-start justify-between border-b-2 border-fucsia-200 pb-5 mb-6">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <div class="text-3xl">🧸</div>
+                <p class="font-display font-bold text-xl text-fucsia-900">Mi Mundo de Juguetes</p>
+              </div>
+              <p class="text-sm text-gray-600">${INFO_TIENDA.direccion}</p>
+              <p class="text-sm text-gray-600">${INFO_TIENDA.telefono} · ${INFO_TIENDA.email}</p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs uppercase tracking-wider text-gray-500 font-bold">Comprobante</p>
+              <p class="font-display font-bold text-lg text-fucsia-900">${pedido.id}</p>
+              <p class="text-sm text-gray-600">${UI.formatFecha(pedido.fecha)}</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4 mb-6 text-sm">
+            <div>
+              <p class="font-bold text-fucsia-900 mb-1">Cliente</p>
+              <p class="text-gray-700">${Auth.usuarioActual() ? Auth.usuarioActual().nombre : ''}</p>
+              ${Auth.usuarioActual() && Auth.usuarioActual().email ? `<p class="text-gray-600 text-xs">${Auth.usuarioActual().email}</p>` : ''}
+            </div>
+            <div>
+              <p class="font-bold text-fucsia-900 mb-1">Envío a</p>
+              <p class="text-gray-700">${pedido.direccion}</p>
+              <p class="text-gray-600 text-xs">${pedido.envioTipo} · Pago: ${pedido.pago}</p>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-200 pt-5 mb-5">
+            <p class="font-bold text-fucsia-900 mb-3">Productos</p>
+            <div class="space-y-3">
+              ${pedido.items.map(item => `
+                <div class="flex items-center gap-3">
+                  <img src="${item.imagen}" alt="${item.nombre}" class="w-14 h-14 object-cover rounded-lg">
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold text-gray-800 line-clamp-2">${item.nombre}</p>
+                    <p class="text-xs text-gray-500">${item.cantidad} × ${UI.formatCLP(item.precio)}</p>
+                  </div>
+                  <p class="font-bold text-sm text-fucsia-700">${UI.formatCLP(item.precio * item.cantidad)}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="border-t-2 border-fucsia-200 pt-5 space-y-2 text-sm">
+            <div class="flex justify-between"><span class="text-gray-600">Subtotal</span><span class="font-semibold">${UI.formatCLP(pedido.subtotal)}</span></div>
+            <div class="flex justify-between"><span class="text-gray-600">Envío</span><span class="font-semibold">${pedido.envio === 0 ? 'Gratis' : UI.formatCLP(pedido.envio)}</span></div>
+            <div class="flex justify-between items-center pt-2 border-t border-gray-200 mt-3">
+              <span class="font-display font-bold text-lg text-fucsia-900">TOTAL</span>
+              <span class="font-display font-bold text-2xl text-fucsia-700">${UI.formatCLP(pedido.total)}</span>
+            </div>
+          </div>
+
+          <div class="text-center text-xs text-gray-500 mt-6 pt-4 border-t border-gray-200">
+            <p>¡Gracias por tu compra! Te enviaremos un correo con los detalles del envío.</p>
+            <p class="mt-1">Mi Mundo de Juguetes · ${new Date().getFullYear()}</p>
+          </div>
+        </section>
+
+        <!-- BOTONES FINALES -->
+        <div class="no-print max-w-3xl mx-auto mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <button onclick="window.print()" class="btn-primary justify-center flex-1 sm:flex-none">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            Imprimir comprobante
+          </button>
+          <a href="perfil.html#pedidos" class="btn-gold justify-center flex-1 sm:flex-none">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            Ver historial de pedidos
+          </a>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

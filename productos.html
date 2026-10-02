@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos · Mi Mundo de Juguetes</title>
+  <meta name="description" content="Catálogo completo de juguetes para todas las edades.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Fredoka', 'system-ui', 'sans-serif'] },
+          colors: {
+            fucsia: { 50:'#fdf2f8',100:'#fce7f3',200:'#fbcfe8',300:'#f9a8d4',400:'#f472b6',500:'#ec4899',600:'#db2777',700:'#be185d',800:'#9d174d',900:'#831843' },
+            sol: { 50:'#fffbeb',100:'#fef3c7',200:'#fde68a',300:'#fcd34d',400:'#fbbf24',500:'#f59e0b',600:'#d97706',700:'#b45309',800:'#92400e',900:'#78350f' },
+            turquesa: { 50:'#ecfeff',100:'#cffafe',200:'#a5f3fc',300:'#67e8f9',400:'#22d3ee',500:'#06b6d4',600:'#0891b2',700:'#0e7490',800:'#155e75',900:'#164e63' },
+            lima: { 50:'#f7fee7',100:'#ecfccb',200:'#d9f99d',300:'#bef264',400:'#a3e635',500:'#84cc16',600:'#65a30d',700:'#4d7c0f',800:'#3f6212',900:'#365314' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen flex flex-col">
+  <div data-header></div>
+
+  <main class="flex-1 container-page py-8 md:py-12">
+    <!-- Header -->
+    <div class="mb-8">
+      <nav class="text-sm text-gray-600 mb-3">
+        <a href="index.html" class="hover:text-fucsia-700">Inicio</a>
+        <span class="mx-2">/</span>
+        <span class="text-fucsia-800 font-medium">Productos</span>
+      </nav>
+      <h1 class="font-display text-3xl md:text-4xl font-bold text-fucsia-900 mb-2" id="pageTitle">Todos los productos</h1>
+      <p class="text-gray-600" id="pageSubtitle">Explora nuestro catálogo completo</p>
+    </div>
+
+    <div class="grid lg:grid-cols-[260px_1fr] gap-8">
+      <!-- SIDEBAR FILTROS -->
+      <aside class="lg:sticky lg:top-24 lg:self-start space-y-6">
+        <!-- Búsqueda -->
+        <div class="card p-5">
+          <h3 class="font-display font-bold text-fucsia-900 mb-3 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            Buscar
+          </h3>
+          <input type="text" id="searchInput" placeholder="¿Qué buscas?" class="input-field text-sm">
+        </div>
+
+        <!-- Categorías -->
+        <div class="card p-5">
+          <h3 class="font-display font-bold text-fucsia-900 mb-3">Categorías</h3>
+          <ul class="space-y-1" id="catFilter">
+            <li><button data-cat="" class="cat-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-fucsia-700 bg-fucsia-50">Todas las categorías</button></li>
+          </ul>
+        </div>
+
+        <!-- Edad -->
+        <div class="card p-5">
+          <h3 class="font-display font-bold text-fucsia-900 mb-3">Edad</h3>
+          <div class="space-y-1" id="edadFilter">
+            <button data-edad="" class="edad-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-fucsia-700 bg-fucsia-50">Todas las edades</button>
+          </div>
+        </div>
+
+        <!-- Precio -->
+        <div class="card p-5">
+          <h3 class="font-display font-bold text-fucsia-900 mb-3">Precio máximo</h3>
+          <input type="range" id="priceRange" min="4000" max="100000" step="1000" value="100000" class="w-full accent-fucsia-600">
+          <div class="flex justify-between text-xs text-gray-600 mt-2">
+            <span>$4.000</span>
+            <span class="font-bold text-fucsia-700" id="priceLabel">$100.000</span>
+          </div>
+        </div>
+
+        <!-- Limpiar -->
+        <button id="clearFilters" class="btn-secondary w-full justify-center text-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M9 7V4a2 2 0 012-2h2a2 2 0 012 2v3"/></svg>
+          Limpiar filtros
+        </button>
+      </aside>
+
+      <!-- PRODUCTOS -->
+      <section>
+        <div class="flex items-center justify-between mb-5">
+          <p class="text-sm text-gray-600"><span id="countResult" class="font-bold text-fucsia-700">0</span> productos encontrados</p>
+          <select id="sortSelect" class="input-field text-sm py-2 w-auto">
+            <option value="relevancia">Más relevantes</option>
+            <option value="precio-asc">Menor precio</option>
+            <option value="precio-desc">Mayor precio</option>
+            <option value="rating">Mejor valorados</option>
+            <option value="nombre">A - Z</option>
+          </select>
+        </div>
+
+        <div id="productosGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"></div>
+        <div id="emptyState" class="hidden card p-12 text-center">
+          <div class="text-6xl mb-4">🔍</div>
+          <h3 class="font-display text-xl font-bold text-fucsia-900 mb-2">No encontramos productos</h3>
+          <p class="text-gray-600">Intenta ajustar los filtros o limpiar la búsqueda.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div data-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    const grid = document.getElementById('productosGrid');
+    const emptyState = document.getElementById('emptyState');
+    const countResult = document.getElementById('countResult');
+    const searchInput = document.getElementById('searchInput');
+    const priceRange = document.getElementById('priceRange');
+    const priceLabel = document.getElementById('priceLabel');
+    const sortSelect = document.getElementById('sortSelect');
+
+    const filtros = {
+      cat: UI.getQuery('cat') || '',
+      edad: UI.getQuery('edad') || '',
+      search: '',
+      maxPrice: 100000,
+      sort: 'relevancia'
+    };
+
+    // Render filtros categorías
+    const catFilterEl = document.getElementById('catFilter');
+    CATEGORIAS.forEach(cat => {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.dataset.cat = cat.id;
+      btn.className = 'cat-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-fucsia-50 hover:text-fucsia-700 transition flex items-center justify-between';
+      btn.innerHTML = `<span>${cat.icono} ${cat.nombre}</span>`;
+      if (cat.id === filtros.cat) {
+        btn.className = 'cat-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-fucsia-700 bg-fucsia-50 transition flex items-center justify-between';
+      }
+      btn.addEventListener('click', () => { filtros.cat = cat.id; actualizar(); syncFilterStyles(); });
+      li.appendChild(btn);
+      catFilterEl.appendChild(li);
+    });
+
+    // Render filtros edad
+    const edadFilterEl = document.getElementById('edadFilter');
+    EDADES.forEach(e => {
+      const btn = document.createElement('button');
+      btn.dataset.edad = e.id;
+      btn.className = 'edad-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-fucsia-50 hover:text-fucsia-700 transition';
+      btn.textContent = e.label;
+      if (e.id === filtros.edad) {
+        btn.className = 'edad-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-fucsia-700 bg-fucsia-50 transition';
+      }
+      btn.addEventListener('click', () => { filtros.edad = e.id; actualizar(); syncFilterStyles(); });
+      edadFilterEl.appendChild(btn);
+    });
+
+    function syncFilterStyles() {
+      document.querySelectorAll('.cat-btn').forEach(b => {
+        if (b.dataset.cat === filtros.cat) {
+          b.className = 'cat-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-fucsia-700 bg-fucsia-50 transition flex items-center justify-between';
+        } else {
+          b.className = 'cat-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-fucsia-50 hover:text-fucsia-700 transition flex items-center justify-between';
+        }
+      });
+      document.querySelectorAll('.edad-btn').forEach(b => {
+        if (b.dataset.edad === filtros.edad) {
+          b.className = 'edad-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-fucsia-700 bg-fucsia-50 transition';
+        } else {
+          b.className = 'edad-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-fucsia-50 hover:text-fucsia-700 transition';
+        }
+      });
+    }
+
+    function actualizar() {
+      let lista = [...PRODUCTOS];
+
+      if (filtros.cat) lista = lista.filter(p => p.categoria === filtros.cat);
+      if (filtros.edad) {
+        const edad = EDADES.find(e => e.id === filtros.edad);
+        if (edad) lista = lista.filter(p => p.edadMin <= edad.max && p.edadMax >= edad.min);
+      }
+      if (filtros.search) {
+        const q = filtros.search.toLowerCase();
+        lista = lista.filter(p => p.nombre.toLowerCase().includes(q) || p.descripcion.toLowerCase().includes(q) || (p.marca || '').toLowerCase().includes(q));
+      }
+      lista = lista.filter(p => p.precio <= filtros.maxPrice);
+
+      if (filtros.sort === 'precio-asc') lista.sort((a, b) => a.precio - b.precio);
+      else if (filtros.sort === 'precio-desc') lista.sort((a, b) => b.precio - a.precio);
+      else if (filtros.sort === 'rating') lista.sort((a, b) => b.rating - a.rating);
+      else if (filtros.sort === 'nombre') lista.sort((a, b) => a.nombre.localeCompare(b.nombre));
+
+      countResult.textContent = lista.length;
+      if (lista.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        grid.innerHTML = lista.map(p => UI.renderProductoCard(p)).join('');
+      }
+
+      const catActual = CATEGORIAS.find(c => c.id === filtros.cat);
+      const edadActual = EDADES.find(e => e.id === filtros.edad);
+      let titulo = 'Todos los productos';
+      let subtitulo = 'Explora nuestro catálogo completo';
+      if (catActual) { titulo = catActual.nombre; subtitulo = catActual.descripcion; }
+      if (edadActual) { subtitulo += ` · ${edadActual.label}`; }
+      document.getElementById('pageTitle').textContent = titulo;
+      document.getElementById('pageSubtitle').textContent = subtitulo;
+    }
+
+    searchInput.addEventListener('input', (e) => { filtros.search = e.target.value; actualizar(); });
+    priceRange.addEventListener('input', (e) => { filtros.maxPrice = parseInt(e.target.value); priceLabel.textContent = UI.formatCLP(filtros.maxPrice); actualizar(); });
+    sortSelect.addEventListener('change', (e) => { filtros.sort = e.target.value; actualizar(); });
+    document.getElementById('clearFilters').addEventListener('click', () => {
+      filtros.cat = ''; filtros.edad = ''; filtros.search = ''; filtros.maxPrice = 100000;
+      searchInput.value = ''; priceRange.value = 100000; priceLabel.textContent = '$100.000';
+      syncFilterStyles();
+      actualizar();
+    });
+
+    actualizar();
+  </script>
+</body>
+</html>

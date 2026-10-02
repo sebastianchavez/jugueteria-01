@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar Compra · Mi Mundo de Juguetes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Fredoka', 'system-ui', 'sans-serif'] },
+          colors: {
+            fucsia: { 50:'#fdf2f8',100:'#fce7f3',200:'#fbcfe8',300:'#f9a8d4',400:'#f472b6',500:'#ec4899',600:'#db2777',700:'#be185d',800:'#9d174d',900:'#831843' },
+            sol: { 50:'#fffbeb',100:'#fef3c7',200:'#fde68a',300:'#fcd34d',400:'#fbbf24',500:'#f59e0b',600:'#d97706',700:'#b45309',800:'#92400e',900:'#78350f' },
+            turquesa: { 50:'#ecfeff',100:'#cffafe',200:'#a5f3fc',300:'#67e8f9',400:'#22d3ee',500:'#06b6d4',600:'#0891b2',700:'#0e7490',800:'#155e75',900:'#164e63' },
+            lima: { 50:'#f7fee7',100:'#ecfccb',200:'#d9f99d',300:'#bef264',400:'#a3e635',500:'#84cc16',600:'#65a30d',700:'#4d7c0f',800:'#3f6212',900:'#365314' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen flex flex-col">
+  <div data-header></div>
+
+  <main class="flex-1 container-page py-8 md:py-12">
+    <nav class="text-sm text-gray-600 mb-3">
+      <a href="carrito.html" class="hover:text-fucsia-700">Carrito</a>
+      <span class="mx-2">/</span>
+      <span class="text-fucsia-800 font-medium">Finalizar compra</span>
+    </nav>
+    <h1 class="font-display text-3xl md:text-4xl font-bold text-fucsia-900 mb-8">💳 Finalizar compra</h1>
+
+    <form id="checkoutForm">
+      <div class="grid lg:grid-cols-[1fr_380px] gap-8">
+        <!-- FORMULARIO -->
+        <div class="space-y-6">
+          <!-- DIRECCIÓN -->
+          <section class="card p-6">
+            <h2 class="font-display font-bold text-xl text-fucsia-900 mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 bg-fucsia-100 rounded-full flex items-center justify-center text-sm">1</span>
+              Dirección de envío
+            </h2>
+            <div class="space-y-3">
+              <div>
+                <label class="form-label" for="direccion">Calle y número</label>
+                <input type="text" id="direccion" required placeholder="Av. Las Flores 1234, Depto 502" class="input-field">
+              </div>
+              <div class="grid md:grid-cols-2 gap-3">
+                <div>
+                  <label class="form-label" for="comuna">Comuna</label>
+                  <input type="text" id="comuna" required placeholder="Providencia" class="input-field">
+                </div>
+                <div>
+                  <label class="form-label" for="region">Región</label>
+                  <input type="text" id="region" required placeholder="Región Metropolitana" class="input-field">
+                </div>
+              </div>
+              <div>
+                <label class="form-label" for="referencia">Referencia (opcional)</label>
+                <input type="text" id="referencia" placeholder="Ej: Casa esquina color verde" class="input-field">
+              </div>
+            </div>
+          </section>
+
+          <!-- TIPO DE ENVÍO -->
+          <section class="card p-6">
+            <h2 class="font-display font-bold text-xl text-fucsia-900 mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 bg-fucsia-100 rounded-full flex items-center justify-center text-sm">2</span>
+              Tipo de envío
+            </h2>
+            <div class="space-y-3" id="envioOptions"></div>
+          </section>
+
+          <!-- MEDIO DE PAGO -->
+          <section class="card p-6">
+            <h2 class="font-display font-bold text-xl text-fucsia-900 mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 bg-fucsia-100 rounded-full flex items-center justify-center text-sm">3</span>
+              Medio de pago
+            </h2>
+            <div class="space-y-3" id="pagoOptions"></div>
+          </section>
+        </div>
+
+        <!-- RESUMEN -->
+        <aside class="lg:sticky lg:top-24 lg:self-start">
+          <div class="card p-6">
+            <h2 class="font-display font-bold text-xl text-fucsia-900 mb-5">Tu pedido</h2>
+            <div class="space-y-3 mb-5 pb-5 border-b border-gray-200 max-h-64 overflow-y-auto" id="itemsResumen"></div>
+            <div class="space-y-2 text-sm mb-5 pb-5 border-b border-gray-200">
+              <div class="flex justify-between"><span class="text-gray-600">Subtotal</span><span class="font-bold" id="subtotalLabel">$0</span></div>
+              <div class="flex justify-between"><span class="text-gray-600">Envío</span><span class="font-bold" id="envioLabel">$0</span></div>
+            </div>
+            <div class="flex justify-between items-end mb-5">
+              <span class="text-gray-700 font-bold">Total</span>
+              <span class="font-display text-3xl font-bold text-fucsia-700" id="totalLabel">$0</span>
+            </div>
+            <button type="submit" class="btn-primary w-full justify-center">
+              Confirmar compra
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </button>
+            <p class="text-xs text-gray-500 text-center mt-3">Tu información está protegida y encriptada.</p>
+          </div>
+        </aside>
+      </div>
+    </form>
+  </main>
+
+  <div data-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    if (!Auth.estaLogueado()) {
+      window.location.href = 'login.html?redirect=checkout.html';
+    }
+    if (Cart.getAll().length === 0) {
+      window.location.href = 'carrito.html';
+    }
+
+    const checkout = {
+      envioTipo: 'estandar',
+      pago: 'webpay'
+    };
+
+    // Render envío
+    document.getElementById('envioOptions').innerHTML = OPCIONES_ENVIO.map((o, i) => `
+      <label class="option-card flex items-center gap-3 cursor-pointer ${i === 1 ? 'selected' : ''}">
+        <input type="radio" name="envio" value="${o.id}" ${i === 1 ? 'checked' : ''} class="text-fucsia-600 focus:ring-fucsia-500">
+        <div class="flex-1">
+          <p class="font-bold text-fucsia-900">${o.nombre}</p>
+          <p class="text-xs text-gray-600">${o.descripcion} · ${o.dias}</p>
+        </div>
+        <p class="font-bold text-fucsia-700">${o.precio === 0 ? 'Gratis' : UI.formatCLP(o.precio)}</p>
+      </label>
+    `).join('');
+
+    // Render pago
+    document.getElementById('pagoOptions').innerHTML = MEDIOS_PAGO.map((m, i) => `
+      <label class="option-card flex items-center gap-3 cursor-pointer ${i === 0 ? 'selected' : ''}">
+        <input type="radio" name="pago" value="${m.id}" ${i === 0 ? 'checked' : ''} class="text-fucsia-600 focus:ring-fucsia-500">
+        <span class="text-3xl">${m.icono}</span>
+        <div class="flex-1">
+          <p class="font-bold text-fucsia-900">${m.nombre}</p>
+          <p class="text-xs text-gray-600">${m.descripcion}</p>
+        </div>
+      </label>
+    `).join('');
+
+    // Auto-fill dirección del usuario
+    const usuario = Auth.usuarioActual();
+    if (usuario) {
+      if (usuario.direccion) document.getElementById('direccion').value = usuario.direccion;
+      if (usuario.comuna) document.getElementById('comuna').value = usuario.comuna;
+      if (usuario.region) document.getElementById('region').value = usuario.region;
+    }
+
+    function actualizarResumen() {
+      const items = Cart.getAll();
+      document.getElementById('itemsResumen').innerHTML = items.map(item => `
+        <div class="flex items-center gap-3">
+          <img src="${item.imagen}" class="w-12 h-12 object-cover rounded-lg">
+          <div class="flex-1 text-sm">
+            <p class="font-semibold text-gray-800 line-clamp-1">${item.nombre}</p>
+            <p class="text-xs text-gray-500">Cant: ${item.cantidad}</p>
+          </div>
+          <p class="text-sm font-bold text-fucsia-700">${UI.formatCLP(item.precio * item.cantidad)}</p>
+        </div>
+      `).join('');
+
+      const subtotal = Cart.getSubtotal();
+      const envio = OPCIONES_ENVIO.find(o => o.id === checkout.envioTipo);
+      const costoEnvio = envio ? envio.precio : 0;
+      document.getElementById('subtotalLabel').textContent = UI.formatCLP(subtotal);
+      document.getElementById('envioLabel').textContent = costoEnvio === 0 ? 'Gratis' : UI.formatCLP(costoEnvio);
+      document.getElementById('totalLabel').textContent = UI.formatCLP(subtotal + costoEnvio);
+    }
+
+    document.querySelectorAll('input[name="envio"]').forEach(input => {
+      input.addEventListener('change', (e) => {
+        checkout.envioTipo = e.target.value;
+        document.querySelectorAll('input[name="envio"]').forEach(i => i.closest('label').classList.remove('selected'));
+        e.target.closest('label').classList.add('selected');
+        actualizarResumen();
+      });
+    });
+
+    document.querySelectorAll('input[name="pago"]').forEach(input => {
+      input.addEventListener('change', (e) => {
+        checkout.pago = e.target.value;
+        document.querySelectorAll('input[name="pago"]').forEach(i => i.closest('label').classList.remove('selected'));
+        e.target.closest('label').classList.add('selected');
+      });
+    });
+
+    document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const datos = {
+        direccion: `${document.getElementById('direccion').value}, ${document.getElementById('comuna').value}, ${document.getElementById('region').value}${document.getElementById('referencia').value ? ' (' + document.getElementById('referencia').value + ')' : ''}`,
+        envioTipo: checkout.envioTipo,
+        pago: MEDIOS_PAGO.find(m => m.id === checkout.pago).nombre
+      };
+      const result = Cart.generarPedido(datos);
+      if (result.ok) {
+        UI.toast('¡Compra realizada con éxito! 🎉', 'success');
+        setTimeout(() => window.location.href = 'confirmacion.html?orden=' + result.pedido.id, 800);
+      } else {
+        UI.toast(result.error, 'error');
+      }
+    });
+
+    actualizarResumen();
+  </script>
+</body>
+</html>

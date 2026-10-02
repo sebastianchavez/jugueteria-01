@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Mundo de Juguetes · Donde la diversión comienza</title>
+  <meta name="description" content="Juguetes seguros, educativos y divertidos para todas las edades. Envío a todo Chile.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Fredoka', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            fucsia: { 50:'#fdf2f8',100:'#fce7f3',200:'#fbcfe8',300:'#f9a8d4',400:'#f472b6',500:'#ec4899',600:'#db2777',700:'#be185d',800:'#9d174d',900:'#831843' },
+            sol: { 50:'#fffbeb',100:'#fef3c7',200:'#fde68a',300:'#fcd34d',400:'#fbbf24',500:'#f59e0b',600:'#d97706',700:'#b45309',800:'#92400e',900:'#78350f' },
+            turquesa: { 50:'#ecfeff',100:'#cffafe',200:'#a5f3fc',300:'#67e8f9',400:'#22d3ee',500:'#06b6d4',600:'#0891b2',700:'#0e7490',800:'#155e75',900:'#164e63' },
+            lima: { 50:'#f7fee7',100:'#ecfccb',200:'#d9f99d',300:'#bef264',400:'#a3e635',500:'#84cc16',600:'#65a30d',700:'#4d7c0f',800:'#3f6212',900:'#365314' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen flex flex-col">
+  <div data-header></div>
+
+  <main class="flex-1">
+    <!-- HERO -->
+    <section class="hero-gradient pt-12 pb-24 md:pt-16 md:pb-32 relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
+      <div class="absolute top-20 right-10 w-72 h-72 bg-fucsia-300 rounded-full blur-3xl opacity-30"></div>
+      <div class="absolute bottom-10 left-10 w-96 h-96 bg-sol-300 rounded-full blur-3xl opacity-30"></div>
+
+      <div class="container-page relative">
+        <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div class="animate-fade-in">
+            <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur px-4 py-2 rounded-full shadow-sm border border-fucsia-200 mb-6">
+              <span class="text-sm font-medium text-fucsia-800">🎉 Desde 2018</span>
+              <span class="text-sol-500">•</span>
+              <span class="text-sm font-medium text-gray-700">+15.000 familias felices</span>
+            </div>
+            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-fucsia-900 leading-[1.05] mb-6">
+              Juguetes que <span class="gradient-text">inspiran</span> sonrisas
+            </h1>
+            <p class="text-lg md:text-xl text-gray-700 mb-10 leading-relaxed max-w-lg">
+              Encuentra los mejores juguetes <strong class="text-fucsia-800">seguros, educativos y divertidos</strong> para cada etapa de la infancia. Despacho a todo Chile.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="productos.html" class="btn-primary btn-shine">
+                Ver catálogo
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </a>
+              <a href="nosotros.html" class="btn-secondary">Nuestra historia</a>
+            </div>
+            <div class="mt-12 grid grid-cols-3 gap-6 max-w-md">
+              <div>
+                <p class="font-display text-4xl font-bold gradient-text">500+</p>
+                <p class="text-sm text-gray-700 mt-1">Productos</p>
+              </div>
+              <div>
+                <p class="font-display text-4xl font-bold gradient-text">15k+</p>
+                <p class="text-sm text-gray-700 mt-1">Familias felices</p>
+              </div>
+              <div>
+                <p class="font-display text-4xl font-bold gradient-text">4.9★</p>
+                <p class="text-sm text-gray-700 mt-1">Calificación</p>
+              </div>
+            </div>
+          </div>
+          <div class="relative animate-fade-in">
+            <div class="absolute -top-6 -left-6 w-32 h-32 bg-fucsia-300 rounded-full blur-2xl opacity-50"></div>
+            <div class="absolute -bottom-6 -right-6 w-40 h-40 bg-sol-400 rounded-full blur-2xl opacity-40"></div>
+            <div class="relative">
+              <div class="absolute -top-4 -right-4 bg-white rounded-2xl shadow-2xl p-4 z-10 animate-bounce-subtle" style="animation-duration: 4s">
+                <div class="flex items-center gap-2">
+                  <div class="flex text-yellow-400 text-sm">★★★★★</div>
+                  <span class="font-bold text-fucsia-900">4.9</span>
+                </div>
+                <p class="text-xs text-gray-500 mt-0.5">+1.200 reseñas</p>
+              </div>
+              <img src="https://picsum.photos/seed/hero-juguetes/800/800" alt="Juguetes" class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/5]">
+              <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-2xl p-4 z-10 animate-bounce-subtle" style="animation-duration: 5s">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-gradient-to-br from-fucsia-500 to-sol-400 rounded-full flex items-center justify-center text-white text-xl">🧸</div>
+                  <div>
+                    <p class="font-bold text-sm text-fucsia-900">Envío 24-48h</p>
+                    <p class="text-xs text-sol-700">A todo Chile</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORÍAS -->
+    <section class="py-20 bg-white">
+      <div class="container-page">
+        <div class="text-center mb-14">
+          <p class="section-subtitle">Explora</p>
+          <h2 class="font-display text-3xl md:text-5xl font-bold text-fucsia-900 mb-3">Nuestras categorías</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Encuentra el juguete perfecto para cada edad e interés.</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6" id="categoriasGrid"></div>
+      </div>
+    </section>
+
+    <!-- PRODUCTOS DESTACADOS -->
+    <section class="py-20 bg-gradient-to-b from-fucsia-50/40 to-white">
+      <div class="container-page">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <div>
+            <p class="section-subtitle">Lo más pedido</p>
+            <h2 class="font-display text-3xl md:text-5xl font-bold text-fucsia-900 mb-2">Productos destacados</h2>
+            <p class="text-gray-600">Los favoritos de nuestros clientes.</p>
+          </div>
+          <a href="productos.html" class="text-fucsia-700 hover:text-fucsia-800 font-semibold flex items-center gap-1 group">
+            Ver todos
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" id="destacadosGrid"></div>
+      </div>
+    </section>
+
+    <!-- BANNER PROMOCIONAL -->
+    <section class="py-16 bg-gradient-to-br from-fucsia-700 to-fucsia-900 relative overflow-hidden text-white">
+      <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+      <div class="absolute top-0 right-0 w-96 h-96 bg-sol-400 rounded-full blur-3xl opacity-20"></div>
+      <div class="container-page relative">
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <p class="section-subtitle !text-sol-400">Oferta especial</p>
+            <h2 class="font-display text-3xl md:text-5xl font-bold mb-4 leading-tight">¡Envío gratis sobre $25.000!</h2>
+            <p class="text-fucsia-100 mb-8 text-lg">Aprovecha el despacho sin costo a todo Chile continental en pedidos sobre $25.000.</p>
+            <a href="productos.html" class="btn-gold">
+              Comprar ahora
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+          <div class="hidden md:flex justify-center">
+            <img src="https://picsum.photos/seed/hero-promo/600/600" alt="Promo" class="rounded-2xl shadow-2xl rotate-2 hover:rotate-0 transition duration-500 max-h-80 object-cover">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDADES -->
+    <section class="py-20 bg-white">
+      <div class="container-page">
+        <div class="text-center mb-12">
+          <p class="section-subtitle">Por edad</p>
+          <h2 class="font-display text-3xl md:text-5xl font-bold text-fucsia-900 mb-3">Encuentra por etapa</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Juguetes cuidadosamente seleccionados para cada momento del desarrollo.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <a href="productos.html?edad=0-2" class="card p-6 text-center hover:shadow-xl transition group">
+            <div class="text-5xl mb-3 group-hover:scale-110 transition">👶</div>
+            <p class="font-display font-bold text-fucsia-900">0-2 años</p>
+            <p class="text-xs text-gray-500 mt-1">Bebés</p>
+          </a>
+          <a href="productos.html?edad=3-5" class="card p-6 text-center hover:shadow-xl transition group">
+            <div class="text-5xl mb-3 group-hover:scale-110 transition">🧒</div>
+            <p class="font-display font-bold text-fucsia-900">3-5 años</p>
+            <p class="text-xs text-gray-500 mt-1">Pre-escolar</p>
+          </a>
+          <a href="productos.html?edad=6-8" class="card p-6 text-center hover:shadow-xl transition group">
+            <div class="text-5xl mb-3 group-hover:scale-110 transition">👦</div>
+            <p class="font-display font-bold text-fucsia-900">6-8 años</p>
+            <p class="text-xs text-gray-500 mt-1">Escolar</p>
+          </a>
+          <a href="productos.html?edad=9-12" class="card p-6 text-center hover:shadow-xl transition group">
+            <div class="text-5xl mb-3 group-hover:scale-110 transition">👧</div>
+            <p class="font-display font-bold text-fucsia-900">9-12 años</p>
+            <p class="text-xs text-gray-500 mt-1">Preadolescentes</p>
+          </a>
+          <a href="productos.html?edad=13+" class="card p-6 text-center hover:shadow-xl transition group col-span-2 md:col-span-1">
+            <div class="text-5xl mb-3 group-hover:scale-110 transition">🧑</div>
+            <p class="font-display font-bold text-fucsia-900">13+ años</p>
+            <p class="text-xs text-gray-500 mt-1">Adolescentes</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="py-20 bg-gradient-to-b from-sol-50/40 to-white">
+      <div class="container-page">
+        <div class="text-center mb-14">
+          <p class="section-subtitle">Testimonios</p>
+          <h2 class="font-display text-3xl md:text-5xl font-bold text-fucsia-900 mb-3">Lo que dicen las familias</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6" id="testimoniosGrid"></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 bg-gradient-to-br from-fucsia-700 to-fucsia-900 text-white relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+      <div class="container-page relative text-center">
+        <h2 class="font-display text-3xl md:text-5xl font-bold mb-4">¿Listo para regalar sonrisas?</h2>
+        <p class="text-fucsia-100 max-w-2xl mx-auto mb-8 text-lg">Explora nuestro catálogo y descubre el juguete perfecto para esa personita especial.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="productos.html" class="btn-gold">Explorar productos</a>
+          <a href="contacto.html" class="btn-secondary bg-transparent text-white border-white/40 hover:bg-white/10 hover:border-white">Contactar</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Render categorías
+    document.getElementById('categoriasGrid').innerHTML = CATEGORIAS.map(cat => `
+      <a href="productos.html?cat=${cat.id}" class="group bg-gradient-to-br from-fucsia-50 to-sol-50 hover:from-fucsia-100 hover:to-sol-100 rounded-2xl p-6 text-center border border-fucsia-100 hover:border-fucsia-200 hover:shadow-lg transition-all">
+        <div class="text-5xl mb-3 group-hover:scale-110 transition duration-300">${cat.icono}</div>
+        <h3 class="font-display font-semibold text-fucsia-900 mb-1">${cat.nombre}</h3>
+        <p class="text-xs text-gray-600">${cat.descripcion}</p>
+      </a>
+    `).join('');
+
+    // Destacados
+    const destacados = PRODUCTOS.filter(p => p.destacado).slice(0, 8);
+    document.getElementById('destacadosGrid').innerHTML = destacados.map(p => UI.renderProductoCard(p)).join('');
+
+    // Testimonios
+    document.getElementById('testimoniosGrid').innerHTML = TESTIMONIOS.map(t => `
+      <div class="card p-6 hover:shadow-md transition">
+        <div class="flex text-yellow-400 mb-3 text-lg">${'★'.repeat(t.rating)}${'☆'.repeat(5 - t.rating)}</div>
+        <p class="text-gray-700 mb-5 leading-relaxed">"${t.texto}"</p>
+        <div class="flex items-center gap-3 pt-4 border-t border-fucsia-100">
+          <img src="${t.avatar}" alt="${t.nombre}" class="w-12 h-12 rounded-full object-cover">
+          <div>
+            <p class="font-semibold text-fucsia-900">${t.nombre}</p>
+            <p class="text-xs text-gray-500">Mamá/Papá feliz</p>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  </script>
+</body>
+</html>

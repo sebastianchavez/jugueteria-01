@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Perfil · Mi Mundo de Juguetes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Fredoka', 'system-ui', 'sans-serif'] },
+          colors: {
+            fucsia: { 50:'#fdf2f8',100:'#fce7f3',200:'#fbcfe8',300:'#f9a8d4',400:'#f472b6',500:'#ec4899',600:'#db2777',700:'#be185d',800:'#9d174d',900:'#831843' },
+            sol: { 50:'#fffbeb',100:'#fef3c7',200:'#fde68a',300:'#fcd34d',400:'#fbbf24',500:'#f59e0b',600:'#d97706',700:'#b45309',800:'#92400e',900:'#78350f' },
+            turquesa: { 50:'#ecfeff',100:'#cffafe',200:'#a5f3fc',300:'#67e8f9',400:'#22d3ee',500:'#06b6d4',600:'#0891b2',700:'#0e7490',800:'#155e75',900:'#164e63' },
+            lima: { 50:'#f7fee7',100:'#ecfccb',200:'#d9f99d',300:'#bef264',400:'#a3e635',500:'#84cc16',600:'#65a30d',700:'#4d7c0f',800:'#3f6212',900:'#365314' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen flex flex-col">
+  <div data-header></div>
+
+  <main class="flex-1 container-page py-8 md:py-12">
+    <div id="perfilContainer"></div>
+  </main>
+
+  <div data-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    if (!Auth.estaLogueado()) {
+      window.location.href = 'login.html?redirect=perfil.html';
+    }
+
+    const usuario = Auth.usuarioActual();
+    const misPedidos = Storage.get(KEYS.PEDIDOS, []).filter(p => p.usuarioId === usuario.id);
+    misPedidos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+    const totalGastado = misPedidos.reduce((acc, p) => acc + p.total, 0);
+
+    document.getElementById('perfilContainer').innerHTML = `
+      <h1 class="font-display text-3xl md:text-4xl font-bold text-fucsia-900 mb-8">👋 Hola, ${usuario.nombre.split(' ')[0]}</h1>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="card p-5 text-center">
+          <p class="font-display text-3xl font-bold text-fucsia-700">${misPedidos.length}</p>
+          <p class="text-xs text-gray-600 mt-1">Pedidos totales</p>
+        </div>
+        <div class="card p-5 text-center">
+          <p class="font-display text-3xl font-bold text-lima-600">${misPedidos.filter(p => p.estado === 'entregado').length}</p>
+          <p class="text-xs text-gray-600 mt-1">Entregados</p>
+        </div>
+        <div class="card p-5 text-center">
+          <p class="font-display text-3xl font-bold text-turquesa-600">${misPedidos.filter(p => p.estado === 'en-camino' || p.estado === 'preparando').length}</p>
+          <p class="text-xs text-gray-600 mt-1">En proceso</p>
+        </div>
+        <div class="card p-5 text-center">
+          <p class="font-display text-2xl font-bold text-sol-700">${UI.formatCLP(totalGastado)}</p>
+          <p class="text-xs text-gray-600 mt-1">Total gastado</p>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-[1fr_2fr] gap-8">
+        <!-- DATOS PERSONALES -->
+        <section class="card p-6">
+          <h2 class="font-display font-bold text-xl text-fucsia-900 mb-4 flex items-center gap-2">
+            <span class="text-2xl">👤</span> Mis datos
+          </h2>
+          <form id="perfilForm" class="space-y-3">
+            <div>
+              <label class="form-label">Nombre completo</label>
+              <input type="text" id="nombre" value="${usuario.nombre}" class="input-field">
+            </div>
+            <div>
+              <label class="form-label">Email</label>
+              <input type="email" id="email" value="${usuario.email}" disabled class="input-field bg-gray-50 cursor-not-allowed">
+            </div>
+            <div>
+              <label class="form-label">Teléfono</label>
+              <input type="tel" id="telefono" value="${usuario.telefono || ''}" class="input-field">
+            </div>
+            <div>
+              <label class="form-label">Dirección</label>
+              <input type="text" id="direccion" value="${usuario.direccion || ''}" class="input-field">
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="form-label">Comuna</label>
+                <input type="text" id="comuna" value="${usuario.comuna || ''}" class="input-field">
+              </div>
+              <div>
+                <label class="form-label">Región</label>
+                <input type="text" id="region" value="${usuario.region || ''}" class="input-field">
+              </div>
+            </div>
+            <button type="submit" class="btn-primary w-full justify-center mt-2">Guardar cambios</button>
+          </form>
+
+          <div class="mt-6 pt-6 border-t border-gray-200">
+            <h3 class="font-bold text-sm text-fucsia-900 mb-3">Cambiar contraseña</h3>
+            <form id="passForm" class="space-y-3">
+              <input type="password" id="passActual" placeholder="Contraseña actual" class="input-field text-sm" required>
+              <input type="password" id="passNueva" placeholder="Nueva contraseña" class="input-field text-sm" required minlength="6">
+              <input type="password" id="passNueva2" placeholder="Confirmar nueva" class="input-field text-sm" required minlength="6">
+              <button type="submit" class="btn-secondary w-full justify-center text-sm">Actualizar contraseña</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- HISTORIAL DE PEDIDOS -->
+        <section id="pedidos">
+          <h2 class="font-display font-bold text-2xl text-fucsia-900 mb-4 flex items-center gap-2">
+            <span class="text-2xl">📦</span> Mis pedidos
+          </h2>
+          ${misPedidos.length === 0 ? `
+            <div class="card p-10 text-center">
+              <div class="text-5xl mb-3">📭</div>
+              <p class="text-gray-600 mb-4">Aún no tienes pedidos.</p>
+              <a href="productos.html" class="btn-primary">Explorar productos</a>
+            </div>
+          ` : `
+            <div class="space-y-4">
+              ${misPedidos.map(p => `
+                <a href="pedido.html?id=${p.id}" class="card p-5 block hover:shadow-lg transition">
+                  <div class="flex items-start justify-between flex-wrap gap-3 mb-3">
+                    <div>
+                      <p class="font-display font-bold text-fucsia-900">${p.id}</p>
+                      <p class="text-xs text-gray-500">${UI.formatFecha(p.fecha)}</p>
+                    </div>
+                    ${UI.badgeEstado(p.estado)}
+                  </div>
+                  <div class="flex items-center gap-2 mb-3 overflow-x-auto">
+                    ${p.items.slice(0, 4).map(item => `
+                      <img src="${item.imagen}" alt="${item.nombre}" class="w-12 h-12 object-cover rounded-lg flex-shrink-0">
+                    `).join('')}
+                    ${p.items.length > 4 ? `<span class="text-xs text-gray-500 font-semibold">+${p.items.length - 4}</span>` : ''}
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <p class="text-sm text-gray-600">${p.items.length} producto${p.items.length > 1 ? 's' : ''}</p>
+                    <p class="font-display font-bold text-fucsia-700">${UI.formatCLP(p.total)}</p>
+                  </div>
+                </a>
+              `).join('')}
+            </div>
+          `}
+        </section>
+      </div>
+    `;
+
+    document.getElementById('perfilForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const r = Auth.actualizarPerfil({
+        nombre: document.getElementById('nombre').value,
+        telefono: document.getElementById('telefono').value,
+        direccion: document.getElementById('direccion').value,
+        comuna: document.getElementById('comuna').value,
+        region: document.getElementById('region').value
+      });
+      if (r.ok) {
+        UI.toast('Datos actualizados correctamente ✅', 'success');
+        setTimeout(() => location.reload(), 800);
+      } else {
+        UI.toast(r.error, 'error');
+      }
+    });
+
+    document.getElementById('passForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nueva = document.getElementById('passNueva').value;
+      const nueva2 = document.getElementById('passNueva2').value;
+      if (nueva !== nueva2) { UI.toast('Las contraseñas no coinciden', 'error'); return; }
+      const r = Auth.cambiarPassword(document.getElementById('passActual').value, nueva);
+      if (r.ok) {
+        UI.toast('Contraseña actualizada 🔒', 'success');
+        e.target.reset();
+      } else {
+        UI.toast(r.error, 'error');
+      }
+    });
+  </script>
+</body>
+</html>

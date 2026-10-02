@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar Contraseña · Mi Mundo de Juguetes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Fredoka', 'system-ui', 'sans-serif'] },
+          colors: {
+            fucsia: { 50:'#fdf2f8',100:'#fce7f3',200:'#fbcfe8',300:'#f9a8d4',400:'#f472b6',500:'#ec4899',600:'#db2777',700:'#be185d',800:'#9d174d',900:'#831843' },
+            sol: { 50:'#fffbeb',100:'#fef3c7',200:'#fde68a',300:'#fcd34d',400:'#fbbf24',500:'#f59e0b',600:'#d97706',700:'#b45309',800:'#92400e',900:'#78350f' },
+            turquesa: { 50:'#ecfeff',100:'#cffafe',200:'#a5f3fc',300:'#67e8f9',400:'#22d3ee',500:'#06b6d4',600:'#0891b2',700:'#0e7490',800:'#155e75',900:'#164e63' },
+            lima: { 50:'#f7fee7',100:'#ecfccb',200:'#d9f99d',300:'#bef264',400:'#a3e635',500:'#84cc16',600:'#65a30d',700:'#4d7c0f',800:'#3f6212',900:'#365314' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen flex flex-col">
+  <div data-header></div>
+
+  <main class="flex-1 flex items-center justify-center py-12 px-4 hero-gradient">
+    <div class="w-full max-w-md">
+      <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10 border border-fucsia-100">
+        <div class="text-center mb-8">
+          <div class="inline-block bg-gradient-to-br from-fucsia-100 to-sol-100 rounded-full p-4 mb-4">
+            <span class="text-5xl">🔑</span>
+          </div>
+          <h1 class="font-display text-3xl font-bold text-fucsia-900 mb-2">¿Olvidaste tu clave?</h1>
+          <p class="text-gray-600">Te enviaremos instrucciones para recuperarla</p>
+        </div>
+
+        <form id="recuperarForm" class="space-y-4">
+          <div>
+            <label for="email" class="form-label">Email registrado</label>
+            <input type="email" id="email" name="email" required placeholder="tu@email.com" class="input-field">
+          </div>
+
+          <button type="submit" class="btn-primary w-full justify-center">
+            Enviar instrucciones
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </button>
+        </form>
+
+        <div class="mt-6 p-4 bg-sol-50 rounded-xl border border-sol-200 text-sm text-sol-900">
+          <p class="font-semibold mb-1">📩 Revisa tu bandeja de entrada</p>
+          <p>Si el email está registrado, recibirás un correo con un enlace para restablecer tu contraseña.</p>
+        </div>
+
+        <p class="text-center text-gray-600 mt-6 text-sm">
+          <a href="login.html" class="text-fucsia-700 hover:text-fucsia-800 font-semibold">← Volver a iniciar sesión</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <div data-footer></div>
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    const form = document.getElementById('recuperarForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const resultado = Auth.recuperarPassword(email);
+      if (resultado.ok) {
+        UI.toast(resultado.mensaje, 'success');
+        form.innerHTML = `
+          <div class="text-center py-6">
+            <div class="text-6xl mb-3">📬</div>
+            <h3 class="font-display text-xl font-bold text-fucsia-900 mb-2">¡Correo enviado!</h3>
+            <p class="text-gray-600">Revisa tu bandeja de entrada y sigue las instrucciones.</p>
+          </div>
+        `;
+      } else {
+        UI.toast(resultado.error, 'error');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto · Mi Mundo de Juguetes</title>
+  <meta name="description" content="Contáctanos, conoce nuestros horarios y ubicación.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Fredoka', 'system-ui', 'sans-serif'] },
+          colors: {
+            fucsia: { 50:'#fdf2f8',100:'#fce7f3',200:'#fbcfe8',300:'#f9a8d4',400:'#f472b6',500:'#ec4899',600:'#db2777',700:'#be185d',800:'#9d174d',900:'#831843' },
+            sol: { 50:'#fffbeb',100:'#fef3c7',200:'#fde68a',300:'#fcd34d',400:'#fbbf24',500:'#f59e0b',600:'#d97706',700:'#b45309',800:'#92400e',900:'#78350f' },
+            turquesa: { 50:'#ecfeff',100:'#cffafe',200:'#a5f3fc',300:'#67e8f9',400:'#22d3ee',500:'#06b6d4',600:'#0891b2',700:'#0e7490',800:'#155e75',900:'#164e63' },
+            lima: { 50:'#f7fee7',100:'#ecfccb',200:'#d9f99d',300:'#bef264',400:'#a3e635',500:'#84cc16',600:'#65a30d',700:'#4d7c0f',800:'#3f6212',900:'#365314' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen flex flex-col">
+  <div data-header></div>
+
+  <main class="flex-1">
+    <section class="hero-gradient py-12 md:py-16 relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
+      <div class="container-page relative text-center">
+        <p class="section-subtitle">Hablemos</p>
+        <h1 class="font-display text-4xl md:text-5xl font-bold text-fucsia-900 mb-4">¿En qué podemos <span class="gradient-text">ayudarte</span>?</h1>
+        <p class="text-gray-700 max-w-2xl mx-auto text-lg">Escríbenos o visítanos. Estamos aquí para resolver tus dudas y ayudarte a encontrar el juguete perfecto.</p>
+      </div>
+    </section>
+
+    <section class="py-12 md:py-16 bg-white">
+      <div class="container-page">
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- FORMULARIO -->
+          <div class="lg:col-span-2">
+            <div class="card p-6 md:p-10">
+              <h2 class="font-display text-2xl font-bold text-fucsia-900 mb-2">Envíanos un mensaje</h2>
+              <p class="text-gray-600 text-sm mb-6">Te responderemos en menos de 24 horas.</p>
+
+              <form id="contactForm" class="space-y-4">
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="form-label" for="nombre">Nombre</label>
+                    <input type="text" id="nombre" required placeholder="Tu nombre" class="input-field">
+                  </div>
+                  <div>
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" required placeholder="tu@email.com" class="input-field">
+                  </div>
+                </div>
+                <div>
+                  <label class="form-label" for="asunto">Asunto</label>
+                  <select id="asunto" required class="input-field">
+                    <option value="">Selecciona un asunto</option>
+                    <option>Consulta sobre un producto</option>
+                    <option>Estado de mi pedido</option>
+                    <option>Devoluciones y cambios</option>
+                    <option>Información mayorista</option>
+                    <option>Otro</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label" for="mensaje">Mensaje</label>
+                  <textarea id="mensaje" required rows="5" placeholder="Cuéntanos en qué podemos ayudarte..." class="input-field resize-none"></textarea>
+                </div>
+                <button type="submit" class="btn-primary">
+                  Enviar mensaje
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- INFO LATERAL -->
+          <aside class="space-y-6">
+            <div class="card p-6">
+              <h3 class="font-display font-bold text-lg text-fucsia-900 mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5 text-fucsia-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Horario de atención
+              </h3>
+              <ul class="space-y-2 text-sm">
+                <li class="flex justify-between items-center pb-2 border-b border-gray-100">
+                  <span class="text-gray-700 font-medium">Lunes a Viernes</span>
+                  <span class="font-bold text-fucsia-700">10:00 - 20:00</span>
+                </li>
+                <li class="flex justify-between items-center pb-2 border-b border-gray-100">
+                  <span class="text-gray-700 font-medium">Sábado</span>
+                  <span class="font-bold text-fucsia-700">10:00 - 21:00</span>
+                </li>
+                <li class="flex justify-between items-center">
+                  <span class="text-gray-700 font-medium">Domingo</span>
+                  <span class="font-bold text-fucsia-700">11:00 - 19:00</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="card p-6">
+              <h3 class="font-display font-bold text-lg text-fucsia-900 mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5 text-fucsia-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Ubicación
+              </h3>
+              <p class="text-gray-700 text-sm mb-3">Av. Providencia 1234, Local 5<br>Providencia, Santiago</p>
+              <a href="https://www.google.com/maps" target="_blank" class="text-sm text-fucsia-700 hover:text-fucsia-800 font-semibold flex items-center gap-1">
+                Ver en Google Maps
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+
+            <div class="card p-6 space-y-3">
+              <h3 class="font-display font-bold text-lg text-fucsia-900 mb-2">Otros canales</h3>
+              <a href="tel:+5622345678" class="flex items-center gap-3 text-sm hover:bg-fucsia-50 -mx-2 px-2 py-1.5 rounded-lg transition">
+                <span class="text-2xl">📞</span>
+                <div>
+                  <p class="text-gray-500 text-xs">Teléfono</p>
+                  <p class="font-semibold text-fucsia-700">+56 2 2345 6789</p>
+                </div>
+              </a>
+              <a href="https://wa.me/56987654321" target="_blank" class="flex items-center gap-3 text-sm hover:bg-lima-50 -mx-2 px-2 py-1.5 rounded-lg transition">
+                <span class="text-2xl">💬</span>
+                <div>
+                  <p class="text-gray-500 text-xs">WhatsApp</p>
+                  <p class="font-semibold text-lima-700">+56 9 8765 4321</p>
+                </div>
+              </a>
+              <a href="mailto:hola@mimundodejuguetes.cl" class="flex items-center gap-3 text-sm hover:bg-sol-50 -mx-2 px-2 py-1.5 rounded-lg transition">
+                <span class="text-2xl">📧</span>
+                <div>
+                  <p class="text-gray-500 text-xs">Email</p>
+                  <p class="font-semibold text-sol-700">hola@mimundodejuguetes.cl</p>
+                </div>
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAPA -->
+    <section class="pb-12">
+      <div class="container-page">
+        <div class="rounded-3xl overflow-hidden shadow-xl border-4 border-white">
+          <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-70.6433%2C-33.4250%2C-70.6173%2C-33.4150&amp;layer=mapnik&amp;marker=-33.4200%2C-70.6303" width="100%" height="380" style="border:0;" loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-footer></div>
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      UI.toast('¡Mensaje enviado! Te responderemos pronto 💌', 'success');
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito · Mi Mundo de Juguetes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Fredoka', 'system-ui', 'sans-serif'] },
+          colors: {
+            fucsia: { 50:'#fdf2f8',100:'#fce7f3',200:'#fbcfe8',300:'#f9a8d4',400:'#f472b6',500:'#ec4899',600:'#db2777',700:'#be185d',800:'#9d174d',900:'#831843' },
+            sol: { 50:'#fffbeb',100:'#fef3c7',200:'#fde68a',300:'#fcd34d',400:'#fbbf24',500:'#f59e0b',600:'#d97706',700:'#b45309',800:'#92400e',900:'#78350f' },
+            turquesa: { 50:'#ecfeff',100:'#cffafe',200:'#a5f3fc',300:'#67e8f9',400:'#22d3ee',500:'#06b6d4',600:'#0891b2',700:'#0e7490',800:'#155e75',900:'#164e63' },
+            lima: { 50:'#f7fee7',100:'#ecfccb',200:'#d9f99d',300:'#bef264',400:'#a3e635',500:'#84cc16',600:'#65a30d',700:'#4d7c0f',800:'#3f6212',900:'#365314' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen flex flex-col">
+  <div data-header></div>
+
+  <main class="flex-1 container-page py-8 md:py-12">
+    <nav class="text-sm text-gray-600 mb-3">
+      <a href="index.html" class="hover:text-fucsia-700">Inicio</a>
+      <span class="mx-2">/</span>
+      <span class="text-fucsia-800 font-medium">Carrito de compras</span>
+    </nav>
+    <h1 class="font-display text-3xl md:text-4xl font-bold text-fucsia-900 mb-8">🛒 Mi carrito</h1>
+
+    <div id="carritoContainer"></div>
+  </main>
+
+  <div data-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    const container = document.getElementById('carritoContainer');
+
+    function render() {
+      const carrito = Cart.getAll();
+      if (carrito.length === 0) {
+        container.innerHTML = `
+          <div class="card p-12 text-center max-w-xl mx-auto">
+            <div class="text-7xl mb-4">🛒</div>
+            <h2 class="font-display text-2xl font-bold text-fucsia-900 mb-3">Tu carrito está vacío</h2>
+            <p class="text-gray-600 mb-6">Aún no has agregado juguetes. ¡Explora nuestro catálogo!</p>
+            <a href="productos.html" class="btn-primary">Ver productos</a>
+          </div>
+        `;
+        return;
+      }
+
+      const subtotal = Cart.getSubtotal();
+      container.innerHTML = `
+        <div class="grid lg:grid-cols-[1fr_360px] gap-8">
+          <!-- ITEMS -->
+          <div class="space-y-4">
+            ${carrito.map(item => `
+              <div class="card p-4 md:p-5 flex flex-col sm:flex-row gap-4 items-stretch">
+                <a href="producto.html?id=${item.productoId}" class="flex-shrink-0">
+                  <img src="${item.imagen}" alt="${item.nombre}" class="w-full sm:w-28 h-28 object-cover rounded-xl">
+                </a>
+                <div class="flex-1 flex flex-col">
+                  <a href="producto.html?id=${item.productoId}" class="font-display font-bold text-fucsia-900 hover:text-fucsia-700 line-clamp-2">${item.nombre}</a>
+                  <p class="text-sm text-gray-500 mt-1">${UI.formatCLP(item.precio)} c/u</p>
+                  <div class="flex items-center justify-between mt-auto pt-3">
+                    <div class="flex items-center border-2 border-fucsia-200 rounded-xl overflow-hidden">
+                      <button onclick="cambiarCant('${item.productoId}', ${item.cantidad - 1})" class="px-3 py-1.5 hover:bg-fucsia-50 text-fucsia-700 font-bold">−</button>
+                      <span class="w-10 text-center font-bold text-fucsia-900 text-sm">${item.cantidad}</span>
+                      <button onclick="cambiarCant('${item.productoId}', ${item.cantidad + 1})" class="px-3 py-1.5 hover:bg-fucsia-50 text-fucsia-700 font-bold">+</button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <p class="font-bold text-fucsia-700">${UI.formatCLP(item.precio * item.cantidad)}</p>
+                      <button onclick="eliminarItem('${item.productoId}')" class="text-red-500 hover:bg-red-50 p-2 rounded-lg transition" title="Eliminar">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M9 7V4a2 2 0 012-2h2a2 2 0 012 2v3"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+
+            <button onclick="vaciarTodo()" class="text-sm text-gray-500 hover:text-red-500 font-semibold flex items-center gap-1 mt-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M9 7V4a2 2 0 012-2h2a2 2 0 012 2v3"/></svg>
+              Vaciar carrito
+            </button>
+          </div>
+
+          <!-- RESUMEN -->
+          <aside class="lg:sticky lg:top-24 lg:self-start">
+            <div class="card p-6">
+              <h2 class="font-display font-bold text-xl text-fucsia-900 mb-5">Resumen del pedido</h2>
+              <div class="space-y-3 text-sm mb-5 pb-5 border-b border-gray-200">
+                <div class="flex justify-between"><span class="text-gray-600">Subtotal</span><span class="font-bold">${UI.formatCLP(subtotal)}</span></div>
+                <div class="flex justify-between"><span class="text-gray-600">Envío</span><span class="text-gray-500 text-xs">Calculado en checkout</span></div>
+              </div>
+              <div class="flex justify-between items-end mb-5">
+                <span class="text-gray-600 font-semibold">Total estimado</span>
+                <span class="font-display text-3xl font-bold text-fucsia-700">${UI.formatCLP(subtotal)}</span>
+              </div>
+              <button onclick="irCheckout()" class="btn-primary w-full justify-center">
+                Proceder al pago
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </button>
+              <a href="productos.html" class="block text-center mt-3 text-sm text-fucsia-700 hover:text-fucsia-800 font-semibold">← Seguir comprando</a>
+            </div>
+          </aside>
+        </div>
+      `;
+    }
+
+    window.cambiarCant = (id, cant) => {
+      Cart.cambiarCantidad(id, cant);
+      render();
+    };
+    window.eliminarItem = (id) => {
+      Cart.eliminar(id);
+      UI.toast('Producto eliminado', 'info');
+      render();
+    };
+    window.vaciarTodo = () => {
+      if (confirm('¿Vaciar todo el carrito?')) {
+        Cart.vaciar();
+        UI.toast('Carrito vaciado', 'info');
+        render();
+      }
+    };
+    window.irCheckout = () => {
+      if (!Auth.estaLogueado()) {
+        UI.toast('Inicia sesión para continuar', 'warning');
+        setTimeout(() => window.location.href = 'login.html?redirect=checkout.html', 600);
+      } else {
+        window.location.href = 'checkout.html';
+      }
+    };
+
+    render();
+  </script>
+</body>
+</html>
